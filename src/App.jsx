@@ -3,16 +3,22 @@ import Box from "./components/Box";
 import ThemeContext from "./Contexts/ThemeContext";
 
 const App = () => {
-  const [theme, setTheme] = useState("light");
+  const [theme, setTheme] = useState(() => {
+    const storageTheme = localStorage.getItem("theme");
+
+    return storageTheme || "light";
+  });
 
   const handleThemeChange = ({ target }) => {
-    setTheme(target.checked ? "dark" : "light");
+    const newTheme = target.checked ? "dark" : "light";
+    setTheme(newTheme);
+    localStorage.setItem("theme", newTheme);
   };
 
   return (
     <ThemeContext.Provider value={theme}>
       <main className={theme}>
-        {/* <p>Texto</p> */}
+        <h3>Troca de tema Reactjs</h3>
         <Box />
         <label>
           <input
